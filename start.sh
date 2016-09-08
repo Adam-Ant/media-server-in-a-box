@@ -3,7 +3,7 @@
 ### Adam Dodman <adam.dodman@gmx.com>
 # Prereqs: docker, docker-compose, curl (https)
 
-export VOLDIR="/root/volumestest/media"
+export VOLDIR="/volumes/media-server"
 SERVICES=("couchpotato" "deluge" "headphones" "nzbget" "plex" "plexpy" "sickrage")
 SERVICEUID=("745" "647" "526" "236" "787" "426" "439")
 
@@ -18,7 +18,7 @@ DOCKER_MACHINE_NAME="DockerDev"
 
 #Check if docker is installed and running
 docker version &> /dev/null
-#[[ $? -ne 0 ]] && echo "Cannot connect to Docker daemon. Please check your configuration." && exit 1
+[[ $? -ne 0 ]] && echo "Cannot connect to Docker daemon. Please check your configuration." && exit 1
 #Check if docker-compose is installed
 docker-compose version &> /dev/null
 [[ $? -ne 0 ]] && echo "docker-compose not found. Please check your configuration." && exit 1
