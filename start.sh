@@ -39,6 +39,6 @@ for ((i=0; i<$slen; i++)); do
 done
 
 
-[[ ! -a $VOLDIR/docker-compose.yml ]] && echo "Downloading docker-compose.yml.." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-in-a-box/master/docker-compose.yml > $VOLDIR/media-compose.yml
+[[ ! -a $VOLDIR/docker-compose.yml ]] && echo "Downloading docker-compose.yml.." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/master/docker-compose.yml > $VOLDIR/media-compose.yml
 echo "Starting services..."
 exec docker-compose -p media -f $VOLDIR/media-compose.yml up -d
