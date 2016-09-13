@@ -28,6 +28,8 @@ for ((i=0; i<$slen; i++)); do
  [[ $( ls -dn $VOLDIR/${SERVICES[$i]} | awk '{print $3}') != ${SERVICEUID[$i]} ]] && echo "Chowning $VOLDIR/${SERVICES[$i]} to user ${SERVICEUID[$i]}" && chown ${SERVICEUID[$i]}:${SERVICEUID[$i]} $VOLDIR/${SERVICES[$i]}
 done
 
-[[ ! -a $VOLDIR/launcher/docker-compose.yml ]] && echo "Downloading docker-compose.yml.." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/master/docker-compose.yml > $VOLDIR/launcher/media-compose.yml
+[[ ! -a $VOLDIR/launcher/docker-compose.yml ]] && echo "Downloading docker-compose.yml.." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/proxy/docker-compose.yml > $VOLDIR/launcher/media-compose.yml
+[[ ! -a $VOLDIR/launcher/nginx.cfg ]] && echo "Downloading nginx.cfg..." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/proxy/nginx.cfg > $VOLDIR/launcher/nginx.cfg
+
 echo "Starting services..."
 exec docker-compose -p media -f $VOLDIR/launcher/media-compose.yml up -d
