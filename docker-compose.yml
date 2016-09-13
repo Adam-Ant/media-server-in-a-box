@@ -79,7 +79,7 @@ services:
     web:
         image: nginx:alpine
         volumes:
-            - $VOLDIR/launcher/nginx.cfg:/etc/nginx/conf.d/media.cfg
+            - $VOLDIR/launcher/nginx.cfg:/etc/nginx/conf.d/media.conf
         restart: always
         ports:
             - "80:80"
