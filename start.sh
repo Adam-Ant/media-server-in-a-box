@@ -4,8 +4,8 @@
 # Prereqs: docker, docker-compose, curl (https)
 
 export VOLDIR="/volumes/media-server"
-SERVICES=("couchpotato" "deluge" "headphones" "nzbget" "plex" "plexpy" "sickrage")
-SERVICEUID=("745" "647" "526" "236" "787" "426" "439")
+SERVICES=("couchpotato" "deluge" "headphones" "nzbget" "plex" "plexpy" "sickrage" "launcher")
+SERVICEUID=("745" "647" "526" "236" "787" "426" "439" "0")
 
 [[ $EUID -ne 0 ]] && echo "Please run this script as root" && exit 1
 
@@ -28,6 +28,6 @@ for ((i=0; i<$slen; i++)); do
  [[ $( ls -dn $VOLDIR/${SERVICES[$i]} | awk '{print $3}') != ${SERVICEUID[$i]} ]] && echo "Chowning $VOLDIR/${SERVICES[$i]} to user ${SERVICEUID[$i]}" && chown ${SERVICEUID[$i]}:${SERVICEUID[$i]} $VOLDIR/${SERVICES[$i]}
 done
 
-[[ ! -a $VOLDIR/docker-compose.yml ]] && echo "Downloading docker-compose.yml.." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/master/docker-compose.yml > $VOLDIR/media-compose.yml
+[[ ! -a $VOLDIR/launcher/docker-compose.yml ]] && echo "Downloading docker-compose.yml.." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/master/docker-compose.yml > $VOLDIR/launcher/media-compose.yml
 echo "Starting services..."
-exec docker-compose -p media -f $VOLDIR/media-compose.yml up -d
+exec docker-compose -p media -f $VOLDIR/launcher/media-compose.yml up -d
