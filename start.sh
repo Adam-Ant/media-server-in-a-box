@@ -25,7 +25,7 @@ docker-compose version &> /dev/null
 slen=${#SERVICES[@]}
 for ((i=0; i<$slen; i++)); do
  [[ ! -d $VOLDIR/${SERVICES[$i]} ]] && echo "Creating folder $VOLDIR/${SERVICES[$i]}" && mkdir -p $VOLDIR/${SERVICES[$i]}
- [[ $( ls -dn $VOLDIR/${SERVICES[$i]} | awk '{print $3}') != ${SERVICEUID[$i]} ]] && echo "Chowning $VOLDIR/${SERVICES[$i]} to user ${SERVICEUID[$i]}" && chown ${SERVICEUID[$i]}:${SERVICEUID[$i]} $VOLDIR/${SERVICES[$i]}
+ [[ $( ls -dn $VOLDIR/${SERVICES[$i]} | awk '{print $3}') != ${SERVICEUID[$i]} ]] && echo "Chowning $VOLDIR/${SERVICES[$i]} to user ${SERVICEUID[$i]}" && chown -R ${SERVICEUID[$i]}:${SERVICEUID[$i]} $VOLDIR/${SERVICES[$i]}
 done
 
 [[ ! -a $VOLDIR/launcher/media-compose.yml ]] && echo "Downloading media-compose.yml.." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/master/docker-compose.yml > $VOLDIR/launcher/media-compose.yml
