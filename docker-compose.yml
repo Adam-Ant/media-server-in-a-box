@@ -54,6 +54,16 @@ services:
             - container:media
         restart: always
 
+    radarr:
+        image: adamant/radarr
+        depends_on:
+            - deluge
+            - nzbget
+        volumes_from:
+            - data
+            - container:media
+         restart: always
+
     plex:
         image: adamant/alpine-plex
         depends_on:
