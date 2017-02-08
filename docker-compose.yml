@@ -67,6 +67,17 @@ services:
         ports:
             - "8181:8181"
 
+    radarr:
+        image: adamant/radarr
+        depends_on:
+             - deluge
+             - nzbget
+        volumes_from:
+            - data
+            - container:media
+        restart: always
+        ports:
+            - "7878:7878"
     plex:
         image: adamant/alpine-plex
         depends_on:

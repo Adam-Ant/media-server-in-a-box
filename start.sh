@@ -4,8 +4,8 @@
 # Prereqs: docker, docker-compose, curl (https)
 
 export VOLDIR="/volumes/media-server"
-SERVICES=("couchpotato" "deluge" "headphones" "nzbget" "plex" "plexpy" "sickrage" "launcher")
-SERVICEUID=("745" "647" "526" "236" "787" "426" "439" "0")
+SERVICES=("couchpotato" "deluge" "headphones" "nzbget" "plex" "plexpy" "sickrage" "launcher" "radarr")
+SERVICEUID=("745" "647" "526" "236" "787" "426" "439" "0" "326")
 
 [[ $EUID -ne 0 ]] && echo "Please run this script as root" && exit 1
 
