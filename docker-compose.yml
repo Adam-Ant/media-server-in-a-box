@@ -62,7 +62,7 @@ services:
         volumes_from:
             - data
             - container:media
-         restart: always
+        restart: always
 
     plex:
         image: adamant/alpine-plex
