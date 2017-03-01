@@ -1,10 +1,10 @@
 #!/bin/bash
 ### Script for building and running a media processing system using docker
 ### Adam Dodman <adam.dodman@gmx.com>
-# Prereqs: docker, docker-compose, curl (https)
+# Prereqs: docker, docker-compose, curl (https), git
 
 export VOLDIR="/volumes/media-server"
-SERVICES=("couchpotato" "deluge" "nzbget" "plex" "plexpy" "sickrage" "launcher") 
+SERVICES=("couchpotato" "deluge" "nzbget" "plex" "plexpy" "sickrage" "nginx") 
 SERVICEUID=("745" "647" "236" "787" "426" "439" "0")
 
 [[ $EUID -ne 0 ]] && echo "Please run this script as root" && exit 1
@@ -32,7 +32,11 @@ done
 	echo -e "<?xml version="1.0" encoding="utf-8"?>\n<Preferences allowedNetworks="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | grep -v '172.*')/255.255.0.0" />" > $VOLDIR/plex/Plex\ Media\ Server/Preferences.xml && chown -R 787:787 $VOLDIR/plex
 
 [[ ! -a ./docker-compose.yml ]] && echo "Downloading Docker Compose config.." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/master/docker-compose.yml > ./docker-compose.yml
-[[ ! -a $VOLDIR/launcher/nginx.cfg ]] && echo "Downloading nginx.cfg..." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/master/nginx.cfg > $VOLDIR/launcher/nginx.cfg
+[[ ! -a $VOLDIR/nginx/nginx.cfg ]] && echo "Downloading nginx.cfg..." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/master/nginx.cfg > $VOLDIR/nginx/nginx.cfg
+
+[[ ! -d $VOLDIR/nginx/Muximux ]] && echo "Downloading Muximix..." && git -C $VOLDIR/nginx clone https://github.com/mescon/Muximux 
+
+cd $VOLDIR/nginx/Muximux/ && git pull
 
 echo "#####################################"
 echo "# Config and directory struture OK! #"
