@@ -31,8 +31,8 @@ done
 [[ ! -a $VOLDIR/plex/Plex\ Media\ Server/Preferences.xml ]] && echo Adding subnet to Plex Whitelist... && mkdir -p $VOLDIR/plex/Plex\ Media\ Server/ && \
 	echo -e "<?xml version="1.0" encoding="utf-8"?>\n<Preferences allowedNetworks="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | grep -v '172.*')/255.255.0.0" />" > $VOLDIR/plex/Plex\ Media\ Server/Preferences.xml && chown -R 787:787 $VOLDIR/plex
 
-[[ ! -a ./docker-compose.yml ]] && echo "Downloading Docker Compose config.." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/proxy/docker-compose.yml > ./docker-compose.yml
-[[ ! -a $VOLDIR/launcher/nginx.cfg ]] && echo "Downloading nginx.cfg..." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/proxy/nginx.cfg > $VOLDIR/launcher/nginx.cfg
+[[ ! -a ./docker-compose.yml ]] && echo "Downloading Docker Compose config.." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/master/docker-compose.yml > ./docker-compose.yml
+[[ ! -a $VOLDIR/launcher/nginx.cfg ]] && echo "Downloading nginx.cfg..." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/master/nginx.cfg > $VOLDIR/launcher/nginx.cfg
 
 echo "#####################################"
 echo "# Config and directory struture OK! #"
