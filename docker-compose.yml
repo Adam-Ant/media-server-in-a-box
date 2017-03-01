@@ -14,8 +14,6 @@ services:
             - data
             - container:media
         restart: always
-        ports:
-            - "6789:6789"
 
     deluge:
         image: adamant/deluge
@@ -25,11 +23,6 @@ services:
             - data
             - container:media
         restart: always
-        ports:
-            - "8112:8112"
-            - "58846:58846"
-            - "53160:53160"
-            - "53160:53160/udp"
 
     sickrage:
         image: adamant/sickrage
@@ -40,8 +33,6 @@ services:
             - data
             - container:media
         restart: always
-        ports:
-            - "8081:8081"
 
     couchpotato:
         image: adamant/couchpotato
@@ -52,20 +43,6 @@ services:
             - data
             - container:media
         restart: always
-        ports:
-            - "5050:5050"
-
-    headphones:
-        image: adamant/headphones
-        depends_on:
-             - deluge
-             - nzbget
-        volumes_from:
-            - data
-            - container:media
-        restart: always
-        ports:
-            - "8181:8181"
 
     radarr:
         image: adamant/radarr
@@ -88,9 +65,16 @@ services:
             - data
             - container:media
         restart: always
-        network_mode: "host"
         ports:
+            - "1900:1900/udp"
+            - "3005:3005"
+            - "5353:5353/udp"
+            - "8324:8324"
             - "32400:32400"
+            - "32410:32410/udp"
+            - "32412-32414:32412-32414/udp"
+            - "32469:32469"
+
 
     plexpy:
         image: adamant/plexpy
@@ -99,5 +83,11 @@ services:
         volumes_from:
             - data
         restart: always
+    
+    web:
+        image: nginx:alpine
+        volumes:
+            - $VOLDIR/launcher/nginx.cfg:/etc/nginx/conf.d/media.conf
+        restart: always
         ports:
-            - "8182:8181"
+            - "80:80"
