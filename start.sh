@@ -16,11 +16,10 @@ docker version &> /dev/null
 docker-compose version &> /dev/null
 [[ $? -ne 0 ]] && echo "docker-compose not found. Please check your configuration." && exit 1
 # Check if media container is configured
-[[ $(docker ps -a --filter="name=media" | wc -l) != "2" ]] && echo "Cannot find a media container - please configure one with your media mounted at /media inside the container before running this script (to keep the size down use tianon/true)" && exit 1
+[[ $(docker ps -a --filter="name=media" | wc -l) != "2" ]] && echo "Cannot find a media container - please configure one with your media mounted at /media inside the container. to keep the size down use tianon/true)" && exit 1
 
 # Check if volumes folder exists
 [[ ! -d $VOLDIR ]] && echo "Creating volumes folder..." && mkdir -p $VOLDIR
-[[ ! -d $VOLDIR/couchpotato ]]
 
 slen=${#SERVICES[@]}
 for ((i=0; i<$slen; i++)); do
@@ -32,8 +31,11 @@ done
 [[ ! -a $VOLDIR/plex/Plex\ Media\ Server/Preferences.xml ]] && echo Adding subnet to Plex Whitelist... && mkdir -p $VOLDIR/plex/Plex\ Media\ Server/ && \
 	echo -e "<?xml version="1.0" encoding="utf-8"?>\n<Preferences allowedNetworks="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | grep -v '172.*')/255.255.0.0" />" > $VOLDIR/plex/Plex\ Media\ Server/Preferences.xml && chown -R 787:787 $VOLDIR/plex
 
-[[ ! -a $VOLDIR/launcher/media-compose.yml ]] && echo "Downloading media-compose.yml.." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/proxy/docker-compose.yml > $VOLDIR/launcher/media-compose.yml
+[[ ! -a ./docker-compose.yml ]] && echo "Downloading Docker Compose config.." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/proxy/docker-compose.yml > ./docker-compose.yml
 [[ ! -a $VOLDIR/launcher/nginx.cfg ]] && echo "Downloading nginx.cfg..." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/proxy/nginx.cfg > $VOLDIR/launcher/nginx.cfg
 
-echo "Starting services..."
-exec docker-compose -p media -f $VOLDIR/launcher/media-compose.yml up -d
+echo "#####################################"
+echo "# Config and directory struture OK! #"
+echo "#####################################"
+echo
+echo "Run docker-compose up -d to start the containers..."
