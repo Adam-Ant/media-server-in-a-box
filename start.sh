@@ -4,8 +4,13 @@
 # Prereqs: docker, docker-compose, curl (https)
 
 export VOLDIR="/volumes/media-server"
+<<<<<<< HEAD
 SERVICES=("couchpotato" "deluge" "nzbget" "plex" "plexpy" "sickrage" "launcher") 
 SERVICEUID=("745" "647" "236" "787" "426" "439" "0")
+=======
+SERVICES=("couchpotato" "deluge" "headphones" "nzbget" "plex" "plexpy" "sickrage" "launcher" "radarr")
+SERVICEUID=("745" "647" "526" "236" "787" "426" "439" "0" "326")
+>>>>>>> master
 
 [[ $EUID -ne 0 ]] && echo "Please run this script as root" && exit 1
 
@@ -27,6 +32,7 @@ for ((i=0; i<$slen; i++)); do
  [[ $( ls -dn $VOLDIR/${SERVICES[$i]} | awk '{print $3}') != ${SERVICEUID[$i]} ]] && echo "Chowning $VOLDIR/${SERVICES[$i]} to user ${SERVICEUID[$i]}" && chown -R ${SERVICEUID[$i]}:${SERVICEUID[$i]} $VOLDIR/${SERVICES[$i]}
 done
 
+<<<<<<< HEAD
 #Since we are not using net=host, we need to whitelist the subnet in plex. ##TODO## Make this overrideable with commandline argument
 [[ ! -a $VOLDIR/plex/Plex\ Media\ Server/Preferences.xml ]] && echo Adding subnet to Plex Whitelist... && mkdir -p $VOLDIR/plex/Plex\ Media\ Server/ && \
 	echo -e "<?xml version="1.0" encoding="utf-8"?>\n<Preferences allowedNetworks="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | grep -v '172.*')/255.255.0.0" />" > $VOLDIR/plex/Plex\ Media\ Server/Preferences.xml && chown -R 787:787 $VOLDIR/plex
@@ -39,3 +45,8 @@ echo "# Config and directory struture OK! #"
 echo "#####################################"
 echo
 echo "Run docker-compose up -d to start the containers..."
+=======
+[[ ! -a $VOLDIR/launcher/media-compose.yml ]] && echo "Downloading media-compose.yml.." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/master/docker-compose.yml > $VOLDIR/launcher/media-compose.yml
+echo "Starting services..."
+exec docker-compose -p media -f $VOLDIR/launcher/media-compose.yml up -d
+>>>>>>> master
