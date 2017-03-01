@@ -49,7 +49,6 @@ services:
         depends_on:
             - sickrage
             - couchpotato
-            - headphones
         volumes_from:
             - data
             - container:media
@@ -79,3 +78,5 @@ services:
         restart: always
         ports:
             - "80:80"
+        depends_on:
+            - plexpy

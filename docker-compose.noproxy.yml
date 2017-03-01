@@ -60,7 +60,6 @@ services:
         depends_on:
             - sickrage
             - couchpotato
-            - headphones
         volumes_from:
             - data
             - container:media
