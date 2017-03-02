@@ -34,7 +34,7 @@ done
 [[ ! -a ./docker-compose.yml ]] && echo "Downloading Docker Compose config.." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/master/docker-compose.yml > ./docker-compose.yml
 [[ ! -a $VOLDIR/nginx/nginx.cfg ]] && echo "Downloading nginx.cfg..." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/master/nginx.cfg > $VOLDIR/nginx/nginx.cfg
 
-[[ ! -d $VOLDIR/nginx/Muximux ]] && echo "Downloading Muximix..." && git -C $VOLDIR/nginx clone https://github.com/mescon/Muximux 
+[[ ! -d $VOLDIR/nginx/Muximux ]] && echo "Downloading Muximix..." && git -C $VOLDIR/nginx clone https://github.com/mescon/Muximux && chown -R 82:82 $VOLDIR/nginx/Muximux
 
 cd $VOLDIR/nginx/Muximux/ && git pull
 
