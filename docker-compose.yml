@@ -74,9 +74,17 @@ services:
     web:
         image: nginx:alpine
         volumes:
-            - $VOLDIR/launcher/nginx.cfg:/etc/nginx/conf.d/media.conf
+            - $VOLDIR/nginx/nginx.cfg:/etc/nginx/conf.d/media.conf
+            - $VOLDIR/nginx/Muximux:/www
         restart: always
         ports:
             - "80:80"
         depends_on:
             - plexpy
+
+    php:
+        image: php:fpm-alpine
+        working_dir: /www
+        volumes:
+            - $VOLDIR/nginx/Muximux:/www
+
