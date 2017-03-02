@@ -83,7 +83,7 @@ services:
             - plexpy
 
     php:
-        image: php:fpm-alpine
+        image: php:7.0-fpm-alpine
         working_dir: /www
         volumes:
             - $VOLDIR/nginx/Muximux:/www
