@@ -75,7 +75,7 @@ services:
         image: nginx:alpine
         volumes:
             - $VOLDIR/nginx/nginx.cfg:/etc/nginx/conf.d/media.conf
-            - $VOLDIR/nginx/Muximux:/www
+            - $VOLDIR/nginx/Organizr:/www
         restart: always
         ports:
             - "80:80"
@@ -86,5 +86,5 @@ services:
         image: php:7.0-fpm-alpine
         working_dir: /www
         volumes:
-            - $VOLDIR/nginx/Muximux:/www
+            - $VOLDIR/nginx/Organizr:/www
 
