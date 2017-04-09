@@ -28,8 +28,8 @@ for ((i=0; i<$slen; i++)); do
 done
 
 #Since we are not using net=host, we need to whitelist the subnet in plex. ##TODO## Make this overrideable with commandline argument
-[[ ! -a $VOLDIR/plex/Plex\ Media\ Server/Preferences.xml ]] && echo Adding subnet to Plex Whitelist... && mkdir -p $VOLDIR/plex/Plex\ Media\ Server/ && \
-	echo -e "<?xml version="1.0" encoding="utf-8"?>\n<Preferences allowedNetworks="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | grep -v '172.*')/255.255.0.0" />" > $VOLDIR/plex/Plex\ Media\ Server/Preferences.xml && chown -R 787:787 $VOLDIR/plex
+[[ ! -a $VOLDIR/plex/Preferences.xml ]] && echo Adding subnet to Plex Whitelist... && \
+	echo -e "<?xml version="1.0" encoding="utf-8"?>\n<Preferences allowedNetworks="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | grep -v '172.*')/255.255.0.0" />" > $VOLDIR/plex/Preferences.xml
 
 [[ ! -a ./docker-compose.yml ]] && echo "Downloading Docker Compose config.." && curl -sSL https://raw.githubusercontent.com/Adam-Ant/media-server-in-a-box/master/docker-compose.yml > ./docker-compose.yml
 [[ ! -a ./.env ]] && echo "Setting up env file..." &&  echo "VOLDIR=${VOLDIR}" > ./.env
@@ -38,7 +38,7 @@ done
 
 [[ ! -d $VOLDIR/nginx/Organizr ]] && echo "Downloading Organizr..." && git -C $VOLDIR/nginx clone https://github.com/causefx/Organizr && chown -R 82:82 $VOLDIR/nginx/Organizr
 
-cd $VOLDIR/nginx/Organizr/ && git pull
+cd $VOLDIR/nginx/Organizr/ && git pull -q
 
 echo "#####################################"
 echo "# Config and directory struture OK! #"
