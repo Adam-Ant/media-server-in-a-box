@@ -45,7 +45,7 @@ services:
             - sickrage
             - couchpotato
         volumes:
-            - $VOLDIR/plex:/config/Plex\ Media\ Server
+            - $VOLDIR/plex:/config/Plex Media Server
         volumes_from:
             - container:media
         restart: always
@@ -63,8 +63,6 @@ services:
         image: adamant/plexpy
         depends_on:
             - plex
-        volumes_from:
-            - data
         volumes:
             - $VOLDIR/plexpy:/config
         restart: always
