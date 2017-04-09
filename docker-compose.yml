@@ -1,26 +1,19 @@
 version: '2'
 
 services:
-    data:
-        image: tianon/true
-        volumes:
-            - $VOLDIR:/config
-
     nzbget:
         image: adamant/nzbget
-        depends_on:
-            - data
+        volumes:
+            - $VOLDIR/nzbget:/config
         volumes_from:
-            - data
             - container:media
         restart: always
 
     deluge:
         image: adamant/deluge
-        depends_on:
-            - data
+        volumes:
+            - $VOLDIR/deluge:/config
         volumes_from:
-            - data
             - container:media
         restart: always
 
@@ -29,8 +22,9 @@ services:
         depends_on:
              - deluge
              - nzbget
+        volumes:
+            - $VOLDIR/sickrage:/config
         volumes_from:
-            - data
             - container:media
         restart: always
 
@@ -39,8 +33,9 @@ services:
         depends_on:
              - deluge
              - nzbget
+        volumes:
+            - $VOLDIR/couchpotato:/config
         volumes_from:
-            - data
             - container:media
         restart: always
 
@@ -49,8 +44,9 @@ services:
         depends_on:
             - sickrage
             - couchpotato
+        volumes:
+            - $VOLDIR/plex:/config/Plex\ Media\ Server
         volumes_from:
-            - data
             - container:media
         restart: always
         ports:
@@ -69,6 +65,8 @@ services:
             - plex
         volumes_from:
             - data
+        volumes:
+            - $VOLDIR/plexpy:/config
         restart: always
     
     web:
