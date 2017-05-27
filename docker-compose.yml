@@ -17,6 +17,12 @@ services:
             - container:media
         restart: always
 
+    hydra:
+        image: adamant/nzbhydra
+        volumes:
+            - $VOLDIR/hydra:/config
+        restart: always
+
     sickrage:
         image: adamant/sickrage
         depends_on:
