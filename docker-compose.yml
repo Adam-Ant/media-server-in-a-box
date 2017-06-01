@@ -46,7 +46,7 @@ services:
         restart: always
 
     plex:
-        image: adamant/alpine-plex
+        image: adamant/plex-tiny
         depends_on:
             - sickrage
             - couchpotato
