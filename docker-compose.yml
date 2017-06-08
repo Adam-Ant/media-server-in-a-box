@@ -34,13 +34,13 @@ services:
             - container:media
         restart: always
 
-    couchpotato:
-        image: adamant/couchpotato
+    radarr:
+        image: adamant/radarr
         depends_on:
              - deluge
              - nzbget
         volumes:
-            - $VOLDIR/couchpotato:/config
+            - $VOLDIR/radarr:/config
         volumes_from:
             - container:media
         restart: always
