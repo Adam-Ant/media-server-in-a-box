@@ -46,10 +46,10 @@ services:
         restart: always
 
     plex:
-        image: adamant/plex-tiny
+        image: adamant/plexmediaserver:plexpass
         depends_on:
             - sickrage
-            - couchpotato
+            - radarr
         volumes:
             - $VOLDIR/plex:/config/Plex Media Server
         volumes_from:
