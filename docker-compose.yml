@@ -85,7 +85,7 @@ services:
             - plexpy
 
     php:
-        image: php:7.0-fpm-alpine
+        build: php/
         working_dir: /www
         volumes:
             - $VOLDIR/nginx/Organizr:/www
